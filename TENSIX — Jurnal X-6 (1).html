@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>TENSIX — Jurnal X-6</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1f4d36;--bt:#fff;--sg:#dfe8dc;--cr:#f6f0e1;--w:#fff;--tx:#1b2a22;--mu:#6b7a70;--bd:#d9d2bd;--rd:#b3412f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--g:#8cc2a0;--bt:#10201a;--sg:#2b4234;--cr:#141a17;--w:#1e2822;--tx:#e8efe9;--mu:#98a89e;--bd:#33423a;--rd:#e07b66}}
+*{box-sizing:border-box}body{margin:0;background:var(--cr);color:var(--tx);font:16px 'DM Sans',sans-serif;padding-bottom:76px}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:.4em 0}.brand{font-family:Anton,sans-serif;letter-spacing:.06em;font-size:30px;color:var(--g)}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--w);border-bottom:1px solid var(--bd)}
+header small{color:var(--mu);display:block;font-size:11px}main{max-width:640px;margin:auto;padding:14px}
+.c{background:var(--w);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.b{display:block;width:100%;border:0;border-radius:12px;padding:13px;background:var(--g);color:var(--bt);font:600 16px 'DM Sans';cursor:pointer;text-align:center;text-decoration:none}
+.b.s{background:var(--sg);color:var(--tx)}.b.big{padding:20px;font-size:19px;font-family:'Space Grotesk'}.b.sm{display:inline-block;width:auto;padding:8px 12px;font-size:14px}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--bd);border-radius:10px;background:var(--cr);color:var(--tx);font:16px 'DM Sans';margin:4px 0 8px}
+label{font-size:13px;color:var(--mu)}nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--w);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav a{flex:1;text-align:center;padding:12px 2px;font-size:12px;color:var(--mu);text-decoration:none;font-weight:600}nav a.on{color:var(--g);border-top:3px solid var(--g);margin-top:-1px}
+.row{display:flex;gap:6px;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bd)}.row:last-child{border:0}
+.st{display:flex;gap:4px}.st button{width:38px;height:36px;border:1px solid var(--bd);border-radius:8px;background:var(--cr);color:var(--tx);font-weight:700}
+.st button.on{background:var(--g);color:var(--bt)}.st button.on.A{background:var(--rd);color:#fff}
+.pill{display:inline-block;padding:3px 9px;border-radius:99px;background:var(--sg);font-size:13px;margin:2px}.warn{background:#f3d9b5;color:#4a3410;border-radius:10px;padding:10px;margin-bottom:12px;font-size:14px}
+.sc{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:6px;border-bottom:1px solid var(--bd);text-align:left}.mu{color:var(--mu);font-size:13px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+</style></head><body>
+<header><div><div class="brand">TENSIX</div><small>JURNAL X-6 · SMAN 1 Krian · 2026/2027</small></div><a href="#set" class="b s sm">⚙ Atur</a></header>
+<main id="app"></main>
+<nav id="nav"></nav>
+<script>
+const N=["ADIVA HASNA PUTRI","AFIFAH CINTA CAHYANINGRUM","AGUSTIN RAMADHANI DARA PANGESTU","AHMAD REIHAN FAMQ AKHDAN","ALFINO PUTRA ARDIANSYAH","AMELIA PUTRI FEBRIYANTI","ANDHARA DANIES ARESTYA","ANINDYA RAHMANIA PUTRI","BRENDA CALYSTA WARDANAYASA","CARISSA SALSABILA ZULYANTI","DAFFIN MAULANA AKBAR","DICKA BADAR ARWANY ALQOWY","ELVINA MUMTAZAH SUDARSONO","ERLINDA ZASKIA MAULIDA","FARIZ APRILIO NUGRAHA","FELANYA DWI USTADYA","FELICIA QUINN NATHANIELA YUSUF","ILYAS PRATAMA NUGRAHA","INNAKY AULA AGUSTIN","IQBALA NUR AINI","KEVIN PRAWIRASALOKA","M HAFIDZ KEY AL KASYI FIRMANSYAH","MIFTHAKHUL AINY MAULIDDYNA","MUHAMMAD RAGIL TITIAN SYA'BANI","MUHAMMAD RASYADITYA DESANDI PUTRA","MUHAMMAD RICKY KURNIAWAN","MUHAMMAD SHEVA PRATAMA","NADINE SALSABILA ALMAIRA","NAFA SARITA","NEZZA CAHYA STEVANI","NURYS SAFAROTUL ANFANI","RAMADHAN JAWARA ARIFANSYAH","SELVIK PUTRI NAGOYA","SHIRINA RAISYA AMSYAR","ZAHIRA FAQIHATUNNISA"];
+const FORM="https://docs.google.com/forms/d/e/1FAIpQLSeKRgJpnA5xkAjtTFapQ3oOwyMxniZ8mf78dEsLy7rzKUHLfg/viewform";
+const HARI=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],ST={S:'Sakit',I:'Izin',A:'Alpa'};
+const KEYS=['guru','kode','ket','mapel','kelas','hari','tgl','mulai','selesai','materi','hadir','izin','sakit','alpha'];
+const L=(s,e,m,g,k)=>({s,e,m,g,k});
+const DEF={1:[L("07:30","08:50","PKWU","Ety Setyawati, SE","52"),L("08:50","10:40","Bahasa Inggris","Khusnul Khotimah, S.Pd.","27"),L("10:40","12:00","Fisika","Fadjariyah, S.Pd.","40"),L("12:50","14:10","Matematika","Ika Listiawati, S.Pd","15")],
+2:[L("06:50","08:10","PABP","Moch. Syauqi, S.Ag.","3"),L("08:10","09:30","Biologi","Pristiana Aprilia, S.Pd.","38"),L("10:00","11:20","Bahasa Indonesia","Dwi Hariyanti, S.Pd.","9"),L("11:20","13:30","Geografi","Fari Alfiatus Jarroh, S.Pd.","49"),L("13:30","14:50","Sosiologi","Purba Wahyu Adi, M.Pd.","56")],
+3:[L("06:50","08:10","Informatika","Diana Murniatiningtyas, S.Kom","60"),L("08:10","09:30","Sejarah","Dwi Selly N, S.Pd.","24"),L("10:00","10:40","Matematika","Ika Listiawati, S.Pd","15"),L("10:40","12:00","Ekonomi","Roseida Pristiwardani, S.Pd.","55")],
+4:[L("06:50","08:10","Kimia","Rasyid Saleh Hutagalung","47"),L("08:10","08:50","Bahasa Indonesia","Dwi Hariyanti, S.Pd.","9"),L("08:50","10:40","PJOK","Bayu Budi Luhur, S.Pd.","32"),L("10:40","11:20","Bahasa Jawa","Dian Pratiwi M, S.Pd.","62"),L("11:20","12:00","Bimbingan Konseling","Nurul Zakqiyah, S.Pd.","65")],
+5:[L("10:00","11:20","PKN","Hadista Ari S, S.Pd.","5"),L("12:50","14:10","KKA","Cipta Trigunadi, S.Kom.Gr","61")]};
+const S={att:{},tasks:[],sched:DEF,fmap:{guru:'entry.1000057',kode:'entry.1000027',ket:'entry.1549117685',mapel:'entry.967112212',kelas:'entry.2055232012',hari:'entry.1000020',tgl:'entry.1000022',mulai:'entry.1000025',selesai:'entry.1000026',materi:'entry.1000023',hadir:'entry.206397377',izin:'entry.26181934',sakit:'entry.1476730290',alpha:'entry.1663473900'},ket:"Pembelajaran didampingi oleh guru pengajar",kelas:"X - 6",lastBackup:0};
+const DB={d:null,open(){return new Promise((r,j)=>{const q=indexedDB.open('tensix',1);q.onupgradeneeded=()=>{const d=q.result;d.createObjectStore('att',{keyPath:'date'});d.createObjectStore('tasks',{keyPath:'id'});d.createObjectStore('meta',{keyPath:'k'})};q.onsuccess=()=>{this.d=q.result;r()};q.onerror=()=>j(q.error)})},
+tx(s,m,f){return new Promise((r,j)=>{const t=this.d.transaction(s,m),q=f(t.objectStore(s));t.oncomplete=()=>r(q&&q.result);t.onerror=()=>j(t.error)})},
+all(s){return this.tx(s,'readonly',o=>o.getAll())},put(s,v){return this.tx(s,'readwrite',o=>o.put(v))},del(s,k){return this.tx(s,'readwrite',o=>o.delete(k))},clr(s){return this.tx(s,'readwrite',o=>o.clear())}};
+const meta=(k,v)=>DB.put('meta',{k,v});
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function wib(){const p={};new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date()).forEach(x=>p[x.type]=x.value);
+const date=`${p.year}-${p.month}-${p.day}`;return{date,min:+p.hour*60+ +p.minute,dow:dow(date)}}
+const dow=d=>new Date(d+'T00:00:00Z').getUTCDay(),tm=t=>{const[a,b]=t.split(':');return +a*60+ +b};
+const fd=d=>{const[y,m,x]=d.split('-');return `${HARI[dow(d)]}, ${+x}/${m}/${y}`};
+function nowLesson(){const n=wib(),l=S.sched[n.dow]||[];return{c:l.find(x=>tm(x.s)<=n.min&&n.min<tm(x.e)),nx:l.find(x=>tm(x.s)>n.min),l}}
+const flat=()=>{const o=[];for(let d=1;d<=5;d++)(S.sched[d]||[]).forEach((l,i)=>o.push({...l,d,i}));return o};
+const rec=d=>S.att[d],cnt=d=>{const r=rec(d),c={S:0,I:0,A:0};if(r)Object.values(r.st).forEach(v=>c[v]++);return c};
+async function setSt(d,name,code){let r=S.att[d]||{date:d,st:{}};if(r.st[name]===code)delete r.st[name];else r.st[name]=code;r.ts=Date.now();S.att[d]=r;await DB.put('att',r)}
+async function allPresent(d){S.att[d]={date:d,st:{},ts:Date.now()};await DB.put('att',S.att[d])}
+async function clearSel(d){if(S.att[d]){S.att[d].st={};S.att[d].ts=Date.now();await DB.put('att',S.att[d])}}
+// ---------- komponen absensi
+function absen(el,date,cb){
+ el.innerHTML=`<div class="c"><div id="sum"></div><input id="q" placeholder="Cari nama…" type="search"><div class="g2"><button class="b s" id="ah">Semua Hadir</button><button class="b s" id="ac">Hapus Pilihan</button></div><div id="lst" style="margin-top:8px"></div></div>`;
+ const draw=()=>{const c=cnt(date),t=c.S+c.I+c.A,q=$('#q').value.toLowerCase();
+  $('#sum').innerHTML=`<b>${fd(date)}</b> ${rec(date)?'<span class="pill">tercatat</span>':'<span class="pill" style="background:#f3d9b5;color:#4a3410">belum dicatat</span>'}<br><span class="pill">Sakit ${c.S}</span><span class="pill">Izin ${c.I}</span><span class="pill">Alpa ${c.A}</span><span class="pill"><b>Hadir ${35-t}</b></span>`;
+  $('#lst').innerHTML=N.map((n,i)=>n.toLowerCase().includes(q)?`<div class="row"><span style="flex:1;font-size:14px">${i+1}. ${esc(n)}</span><div class="st" data-i="${i}">${['S','I','A'].map(k=>`<button class="${k} ${rec(date)?.st[n]===k?'on':''}" data-k="${k}">${k}</button>`).join('')}</div></div>`:'').join('');
+  cb&&cb()};
+ $('#q').oninput=draw;$('#ah').onclick=async()=>{await allPresent(date);draw()};$('#ac').onclick=async()=>{await clearSel(date);draw()};
+ $('#lst').onclick=async e=>{const b=e.target.closest('button');if(!b)return;await setSt(date,N[b.parentNode.dataset.i],b.dataset.k);const y=$('#lst').scrollTop;draw()};draw()}
+// ---------- halaman
+const P={};
+P.home=el=>{const{c,nx}=nowLesson(),n=wib(),late=Date.now()-S.lastBackup>7*864e5&&Object.keys(S.att).length;
+ el.innerHTML=`${late?'<div class="warn">Sudah lebih dari 7 hari sejak backup terakhir. Data tersimpan di browser ini saja. <a href="#set">Backup sekarang</a></div>':''}
+ <a class="b big" href="#jurnal">ISI JURNAL</a><div class="c" style="margin-top:12px"><div class="mu">${fd(n.date)} · ${String(Math.floor(n.min/60)).padStart(2,'0')}:${String(n.min%60).padStart(2,'0')} WIB</div>
+ ${c?`<h2>${esc(c.m)}</h2><div>${esc(c.g)}</div><div class="mu">${c.s}–${c.e}</div>`:'<h3>Tidak ada pelajaran saat ini</h3>'}${nx?`<hr><div class="mu">Berikutnya</div><b>${esc(nx.m)}</b> · ${nx.s}–${nx.e}<br>${esc(nx.g)}`:''}</div>
+ <div class="mu" style="text-align:center;margin-top:20px"><b style="font-family:Anton;letter-spacing:.1em">ONE CLASS. ONE TEAM. ONE STORY.</b></div>`};
+let man=false;
+P.jurnal=el=>{const n=wib(),all=flat();man=false;
+ el.innerHTML=`<div class="c"><label>Pelajaran</label><select id="ls">${all.map(l=>`<option value="${l.d}-${l.i}">${HARI[l.d]} · ${esc(l.m)} (${l.s}–${l.e})</option>`).join('')}</select><div id="li"></div></div><div id="ab"></div>
+ <div class="c"><label>Materi Pembelajaran</label><textarea id="mt" rows="3" placeholder="Ketik materi hari ini"></textarea><button class="b big" id="go">BUKA GOOGLE FORM OTOMATIS</button><p class="mu">Form terbuka di tab baru, lalu periksa dan tekan Kirim sendiri.</p><div id="lk"></div></div>`;
+ const pick=()=>{const{c,nx,l}=nowLesson(),x=c||nx||l[0];if(x)$('#ls').value=`${n.dow}-${S.sched[n.dow].indexOf(x)}`};
+ const info=()=>{const l=cur();$('#li').innerHTML=l?`<b>${esc(l.g)}</b> · kode ${esc(l.k)}`:''};
+ const cur=()=>{const[d,i]=$('#ls').value.split('-');return S.sched[d]?.[i]};
+ pick();info();$('#ls').onchange=()=>{man=true;info()};
+ absen($('#ab'),n.date);
+ $('#go').onclick=()=>{const l=cur(),m=$('#mt').value.trim();if(!l)return alert('Pilih pelajaran.');if(!m)return alert('Isi materi pembelajaran dulu.');
+  if(!rec(n.date)&&!confirm('Absensi hari ini belum dicatat. Lanjut dan anggap 35 siswa hadir?'))return;
+  const u=buildUrl(l,n.date,m);if(u){$('#lk').innerHTML='<a class="b" style="margin-top:8px" target="_blank" rel="noopener" href="'+esc(u)+'">Buka Form Terisi (ketuk jika tab belum terbuka)</a><label>Tautan terisi. Jika form terbuka kosong, salin tautan ini dan tempel di Chrome</label><textarea rows="4" readonly onclick="this.select()">'+esc(u)+'</textarea>';window.open(u,'_blank')}};
+ el._tick=()=>{if(!man){const v=$('#ls').value;pick();if($('#ls').value!==v)info()}}};
+function buildUrl(l,date,materi){const M=S.fmap;if(!M){alert('Peta isian Google Form belum diatur. Buka Atur → Pengaturan Google Form.');location.hash='set';return}
+ const p=new URLSearchParams();p.set('usp','pp_url');const c=cnt(date),r=rec(date)?.st||{},nm=k=>N.filter(x=>r[x]===k).join(', ');
+ const add=(k,v)=>{if(v!=='')p.set(M[k],v)},[y,mo,d]=date.split('-'),t=(k,s)=>{const[h,m]=s.split(':');p.set(M[k]+'_hour',h);p.set(M[k]+'_minute',m)};
+ add('guru',l.g);add('kode',String(l.k).padStart(2,'0'));add('ket',S.ket);add('mapel',l.f||l.m);add('kelas',S.kelas);add('hari',HARI[dow(date)]);
+ p.set(M.tgl+'_year',y);p.set(M.tgl+'_month',mo);p.set(M.tgl+'_day',d);t('mulai',l.s);t('selesai',l.e);
+ add('materi',materi);add('hadir',String(35-c.S-c.I-c.A));add('izin',nm('I'));add('sakit',nm('S'));add('alpha',nm('A'));return FORM+'?'+p}
+P.jadwal=el=>{el.innerHTML=[1,2,3,4,5].map(d=>`<div class="c"><h3>${HARI[d]}</h3>${(S.sched[d]||[]).map(l=>`<div class="row"><div><b>${esc(l.m)}</b><div class="mu">${esc(l.g)}</div></div><span>${l.s}–${l.e}</span></div>`).join('')||'<span class="mu">Kosong</span>'}</div>`).join('')+'<p class="mu">Istirahat: 09:30–10:00 dan 12:00–12:50. Ubah jadwal di Atur.</p>'};
+let ad=null;P.absen=el=>{ad=ad||wib().date;el.innerHTML=`<div class="c"><label>Tanggal</label><input type="date" id="dt" value="${ad}"></div><div id="ab"></div>`;$('#dt').onchange=e=>{if(e.target.value){ad=e.target.value;absen($('#ab'),ad)}};absen($('#ab'),ad)};
+let RT='h';P.rekap=el=>{const n=wib(),dates=Object.keys(S.att).sort();
+ el.innerHTML=`<div class="g2" style="margin-bottom:10px">${[['h','Harian'],['b','Bulanan'],['s','Per Siswa']].map(([k,t])=>`<button class="b ${RT==k?'':'s'} sm" data-t="${k}">${t}</button>`).join('')}</div><div id="rb"></div><button class="b s" id="csv" style="margin-top:8px">Ekspor Rekap CSV</button>`;
+ el.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{RT=b.dataset.t;P.rekap(el)});
+ const rb=$('#rb'),names=(r,k)=>N.filter(x=>r?.st[x]===k);
+ if(RT=='h'){rb.innerHTML='<div class="c"><input type="date" id="rd" value="'+n.date+'"><div id="ro"></div></div>';const f=()=>{const d=$('#rd').value,r=rec(d),c=cnt(d);$('#ro').innerHTML=!r?'<p class="mu">Tanggal ini belum dicatat.</p>':`<p><b>Hadir ${35-c.S-c.I-c.A}</b> · Tidak hadir ${c.S+c.I+c.A}</p>`+['S','I','A'].map(k=>`<b>${ST[k]} (${c[k]})</b><br>${names(r,k).map(esc).join('<br>')||'<span class="mu">–</span>'}<br><br>`).join('')};$('#rd').onchange=f;f()}
+ if(RT=='b'){rb.innerHTML=`<div class="c"><input type="month" id="rm" value="${n.date.slice(0,7)}"><div id="ro" class="sc"></div></div>`;const f=()=>{const m=$('#rm').value,ds=dates.filter(d=>d.startsWith(m));$('#ro').innerHTML=`<p class="mu">${ds.length} hari tercatat</p><table><tr><th>Nama</th><th>S</th><th>I</th><th>A</th><th>Σ</th></tr>${N.map(x=>{const c={S:0,I:0,A:0};ds.forEach(d=>{const v=S.att[d].st[x];if(v)c[v]++});return`<tr><td>${esc(x)}</td><td>${c.S}</td><td>${c.I}</td><td>${c.A}</td><td><b>${c.S+c.I+c.A}</b></td></tr>`}).join('')}</table>`};$('#rm').onchange=f;f()}
+ if(RT=='s'){rb.innerHTML=`<div class="c"><select id="rs">${N.map((x,i)=>`<option value="${i}">${esc(x)}</option>`).join('')}</select><div id="ro"></div></div>`;const f=()=>{const x=N[$('#rs').value],l=dates.filter(d=>S.att[d].st[x]),c={S:0,I:0,A:0};l.forEach(d=>c[S.att[d].st[x]]++);$('#ro').innerHTML=`<p>Sakit <b>${c.S}</b> · Izin <b>${c.I}</b> · Alpa <b>${c.A}</b> · Total <b>${l.length}</b></p>`+(l.map(d=>`<div class="row"><span>${fd(d)}</span><b>${ST[S.att[d].st[x]]}</b></div>`).join('')||'<span class="mu">Belum ada ketidakhadiran tercatat.</span>')};$('#rs').onchange=f;f()}
+ $('#csv').onclick=()=>{const rows=[['tanggal','nama','status']];dates.forEach(d=>Object.entries(S.att[d].st).forEach(([x,v])=>rows.push([d,x,ST[v]])));dl('rekap-absensi.csv','text/csv',rows.map(r=>r.map(c=>`"${c.replace(/"/g,'""')}"`).join(',')).join('\n'))}};
+let pe=null;P.pr=el=>{const n=wib().date,days=d=>Math.round((new Date(d+'T00:00:00Z')-new Date(n+'T00:00:00Z'))/864e5),t=pe&&S.tasks.find(x=>x.id==pe)||{};
+ const ts=[...S.tasks].sort((a,b)=>(a.done-b.done)||(a.dd+a.dj).localeCompare(b.dd+b.dj));
+ el.innerHTML=`<div class="c"><h3>${pe?'Edit':'Tambah'} PR</h3><select id="pm">${[...new Set(flat().map(l=>l.m))].map(m=>`<option ${t.m==m?'selected':''}>${esc(m)}</option>`).join('')}</select><input id="pt" placeholder="Judul PR" value="${esc(t.t)}"><textarea id="pd" rows="2" placeholder="Deskripsi">${esc(t.d)}</textarea><div class="g2"><input type="date" id="pdd" value="${t.dd||n}"><input type="time" id="pdj" value="${t.dj||'23:59'}"></div><button class="b" id="ps">Simpan</button></div>
+ <p class="mu">PR hanya tersimpan di perangkat ini dan tidak terlihat di HP lain.</p>${ts.map(x=>{const k=days(x.dd),b=x.done?'selesai':k<0?'lewat':k==0?'HARI INI':k<=2?'H-'+k:'';return`<div class="c"><b>${esc(x.t)}</b> <span class="pill">${esc(x.m)}</span>${b?`<span class="pill" style="background:${k<=0&&!x.done?'#f3d9b5':''}">${b}</span>`:''}<div class="mu">${fd(x.dd)} ${x.dj}</div><div>${esc(x.d)}</div><div class="g2" style="margin-top:8px"><button class="b s sm" data-a="t" data-id="${x.id}">${x.done?'Buka lagi':'Tandai selesai'}</button><button class="b s sm" data-a="e" data-id="${x.id}">Edit</button></div><button class="b s sm" style="margin-top:6px" data-a="x" data-id="${x.id}">Hapus</button></div>`}).join('')}`;
+ $('#ps').onclick=async()=>{if(!$('#pt').value.trim())return alert('Isi judul.');const o={id:pe||Date.now(),m:$('#pm').value,t:$('#pt').value.trim(),d:$('#pd').value,dd:$('#pdd').value,dj:$('#pdj').value,done:t.done||false};await DB.put('tasks',o);S.tasks=S.tasks.filter(x=>x.id!=o.id).concat(o);pe=null;P.pr(el)};
+ el.onclick=async e=>{const b=e.target.closest('[data-a]');if(!b)return;const id=b.dataset.id,x=S.tasks.find(y=>y.id==id);if(b.dataset.a=='e'){pe=id;P.pr(el)}else if(b.dataset.a=='t'){x.done=!x.done;await DB.put('tasks',x);P.pr(el)}else if(confirm('Hapus PR ini?')){await DB.del('tasks',x.id);S.tasks=S.tasks.filter(y=>y!=x);P.pr(el)}}};
+function dl(name,type,txt){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;a.click()}
+P.set=el=>{el.innerHTML=`<div class="c"><h3>Backup & Restore</h3><p class="mu">Data tersimpan di browser HP ini (IndexedDB). Menghapus data situs atau ganti HP menghilangkan data — backup berkala. Terakhir: ${S.lastBackup?new Date(S.lastBackup).toLocaleString('id-ID',{timeZone:'Asia/Jakarta'}):'belum pernah'}</p><button class="b" id="bk">Backup Data (JSON)</button><label style="margin-top:8px;display:block">Restore dari file JSON</label><input type="file" id="rf" accept=".json"></div>
+ <div class="c"><h3>Pengaturan Google Form</h3><p class="mu">${S.fmap?'✔ Peta isian tersimpan.':'Belum diatur.'} <b>Jika form terbuka tapi kosong</b>, berarti entry ID bawaan tidak cocok. Ambil yang asli: 1) buka form, isi ke-14 pertanyaan (apa saja); 2) ⋮ → "Dapatkan tautan terisi otomatis" → Dapatkan tautan → Salin; 3) tempel di bawah lalu Simpan Peta Isian.</p><textarea id="fu" rows="3" placeholder="https://docs.google.com/forms/...entry.123=..."></textarea><button class="b" id="fs">Simpan Peta Isian</button>
+ <label>Teks "Keterangan"</label><input id="ket" value="${esc(S.ket)}"><label>Teks Kelas (sama dengan opsi di form)</label><input id="kl" value="${esc(S.kelas)}"><button class="b s" id="ks">Simpan</button></div>
+ <div class="c"><h3>Ubah Jadwal</h3><p class="mu">Format JSON: hari 1=Senin…5=Jumat; s/e jam, m mapel, g guru, k kode. Tambah "f" jika nama di dropdown Google Form berbeda dari "m".</p><textarea id="sj" rows="10" style="font:12px monospace">${esc(JSON.stringify(S.sched,null,1))}</textarea><div class="g2"><button class="b" id="ss">Simpan Jadwal</button><button class="b s" id="sr">Reset</button></div></div>
+ <div class="c"><button class="b s" id="cj">Ekspor Rekap CSV</button></div>`;
+ $('#bk').onclick=async()=>{dl(`tensix-backup-${wib().date}.json`,'application/json',JSON.stringify({app:'tensix',v:1,att:await DB.all('att'),tasks:await DB.all('tasks'),meta:await DB.all('meta')}));S.lastBackup=Date.now();meta('lastBackup',S.lastBackup)};
+ $('#rf').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.app!=='tensix'||!Array.isArray(j.att)||!Array.isArray(j.tasks)||!Array.isArray(j.meta)||j.att.some(r=>!r.date||!r.st))throw 0;
+  if(!confirm(`Timpa semua data saat ini dengan backup (${j.att.length} hari absensi, ${j.tasks.length} PR)?`))return;
+  for(const s of['att','tasks','meta'])await DB.clr(s);for(const s of['att','tasks','meta'])for(const v of j[s])await DB.put(s,v);await load();alert('Restore berhasil.');P.set(el)}catch{alert('File backup tidak valid.')}};
+ $('#fs').onclick=()=>{let u;try{u=new URL($('#fu').value.trim())}catch{return alert('Tautan tidak valid.')}const b=[];for(const[k]of u.searchParams)if(k.startsWith('entry.')){const x=k.replace(/_(year|month|day|hour|minute)$/,'');if(!b.includes(x))b.push(x)}
+  if(b.length!==KEYS.length)return alert(`Ditemukan ${b.length} isian, seharusnya 14. Pastikan semua pertanyaan terisi.`);const m={};KEYS.forEach((k,i)=>m[k]=b[i]);S.fmap=m;meta('fmap',m);alert('Peta tersimpan. Urutan: '+KEYS.join(', '));P.set(el)};
+ $('#ks').onclick=()=>{S.ket=$('#ket').value;S.kelas=$('#kl').value;meta('ket',S.ket);meta('kelas',S.kelas);alert('Tersimpan.')};
+ $('#ss').onclick=()=>{try{const j=JSON.parse($('#sj').value);for(let d=1;d<=5;d++)(j[d]||[]).forEach(l=>{if(!/^\d\d:\d\d$/.test(l.s)||!/^\d\d:\d\d$/.test(l.e)||!l.m)throw 0});S.sched=j;meta('sched',j);alert('Jadwal disimpan.')}catch{alert('Format jadwal tidak valid.')}};
+ $('#sr').onclick=()=>{if(confirm('Kembalikan jadwal ke data foto?')){S.sched=DEF;meta('sched',DEF);P.set(el)}};
+ $('#cj').onclick=()=>{RT='h';location.hash='rekap'}};
+// ---------- router
+const NAV=[['home','Beranda'],['jurnal','Jurnal'],['jadwal','Jadwal'],['absen','Absensi'],['rekap','Rekap'],['pr','PR']];
+function route(){const k=(location.hash.slice(1)||'home');const f=P[k]||P.home;$('#nav').innerHTML=NAV.map(([i,t])=>`<a href="#${i}" class="${i==k?'on':''}">${t}</a>`).join('');const a=$('#app');a.onclick=null;f(a);scrollTo(0,0)}
+const PAK=['Moch. Syauqi','Purba Wahyu Adi','Rasyid Saleh Hutagalung','Bayu Budi Luhur','Cipta Trigunadi'];
+const sapa=(g,m)=>{g=g.split(',')[0].trim().replace(/^(Pak|Bu|Mam) /,'');return(m==='Bahasa Inggris'?'Mam ':PAK.some(p=>g.startsWith(p))?'Pak ':'Bu ')+g};
+async function load(){const[a,t,m]=await Promise.all([DB.all('att'),DB.all('tasks'),DB.all('meta')]);S.att={};a.forEach(r=>S.att[r.date]=r);S.tasks=t;m.forEach(x=>{S[x.k==='sched'?'sched':x.k]=x.v});Object.values(S.sched).flat().forEach(l=>{l.g=sapa(l.g,l.m)})}
+(async()=>{try{await DB.open();await load();navigator.storage?.persist?.()}catch(e){document.body.insertAdjacentHTML('afterbegin','<div class="warn">Penyimpanan browser tidak tersedia; data tidak akan tersimpan.</div>')}
+ addEventListener('hashchange',route);route();setInterval(()=>{const k=location.hash.slice(1)||'home';if(k=='home')P.home($('#app'));else if(k=='jurnal')$('#app')._tick?.()},30000)})();
+</script></body></html>
